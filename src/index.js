@@ -3,6 +3,8 @@ const taskRouter = require('./tasks/task.router.js');
 
 const app = express();
 
+app.use(express.json());
+
 const port = 3001;
 
 app.use('/', taskRouter);
