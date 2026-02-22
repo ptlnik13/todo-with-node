@@ -1,0 +1,10 @@
+PATCH http://localhost:3001/tasks
+Content-Type: application/json
+
+#{
+#"title": "Title of the Task.",
+#"date" : "2025-01-01T12:00:00Z",
+#"description": "lorem Ipsum I sthe tgreawr rf dsd fsf asdfa sf",
+#"priority" : "normal",
+#"status" : "todo"
+#}
