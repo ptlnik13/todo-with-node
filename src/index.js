@@ -3,10 +3,19 @@ const fs = require('fs');
 const path = require('path');
 const morgan = require('morgan');
 const taskRouter = require('./tasks/task.router.js');
+const cors = require('cors');
 
 const app = express();
 
 app.use(express.json());
+
+// const corsOptions = {
+//     origin: ['example.com', 'http://localhost:3000']
+// }
+//
+// app.use(cors(corsOptions));
+
+app.use(cors()); // wild card
 
 const port = 3001;
 
