@@ -19,12 +19,7 @@ function handleGetTask(req, res) {
             status     : "inProgress",
         },
     ];
-    res.status(StatusCodes.OK).json({
-        status    : "success",
-        statusCode: StatusCodes.OK,
-        message   : ReasonPhrases.OK,
-        data      : response
-    });
+    res.json(response);
 }
 
 function handlePostTask(req, res) {
