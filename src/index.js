@@ -1,4 +1,7 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const morgan = require('morgan');
 const taskRouter = require('./tasks/task.router.js');
 
 const app = express();
@@ -6,6 +9,9 @@ const app = express();
 app.use(express.json());
 
 const port = 3001;
+
+let accessLogStream = fs.createWriteStream(path.join(__dirname, '../access.log'), {flags: 'a'})
+app.use(morgan('combined', {stream: accessLogStream}))
 
 app.use('/', taskRouter);
 
