@@ -1,0 +1,20 @@
+{
+  "name": "fullstack-node",
+  "version": "1.0.0",
+  "description": "FullStack node js project",
+  "license": "ISC",
+  "author": "Nikesh",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
