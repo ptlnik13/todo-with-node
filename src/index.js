@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const morgan = require('morgan');
 const taskRouter = require('./tasks/task.router.js');
-const {statusCodes, StatusCodes} = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 const cors = require('cors');
 const responseFormatter = require('./middlewares/responseFormatter.js');
+const authRouter = require("./auth/auth.router");
 
 const app = express();
 
@@ -26,7 +27,7 @@ let accessLogStream = fs.createWriteStream(path.join(__dirname, '../access.log')
 app.use(morgan('combined', {stream: accessLogStream}))
 
 app.use('/', taskRouter);
-
+app.use('/', authRouter);
 app.use((req, res) => res.status(StatusCodes.NOT_FOUND).json(null))
 
 app.listen(port, () => console.log(`The app listening on port http://localhost:${port}`));
