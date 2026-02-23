@@ -7,6 +7,7 @@ const {StatusCodes} = require('http-status-codes');
 const cors = require('cors');
 const responseFormatter = require('./middlewares/responseFormatter.js');
 const authRouter = require("./auth/auth.router");
+const userRouter = require("./users/users.router");
 
 const app = express();
 
@@ -27,7 +28,8 @@ let accessLogStream = fs.createWriteStream(path.join(__dirname, '../access.log')
 app.use(morgan('combined', {stream: accessLogStream}))
 
 app.use('/', taskRouter);
-app.use('/', authRouter);
+app.use('/auth', authRouter);
+app.use('/users', userRouter);
 app.use((req, res) => res.status(StatusCodes.NOT_FOUND).json(null))
 
 app.listen(port, () => console.log(`The app listening on port http://localhost:${port}`));
