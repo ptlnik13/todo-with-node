@@ -1,5 +1,3 @@
-const {StatusCodes, ReasonPhrases} = require('http-status-codes');
-
 function handleGetTask(req, res) {
     let response = [
         {

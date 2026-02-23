@@ -1,7 +1,12 @@
 const express = require('express');
 const taskRouter = express.Router();
-const {handleGetTask} = require('./tasks.controller.js')
-const {handlePostTask, handlePatchTask, handleDeleteTask} = require("./tasks.controller");
+
+const {
+    handleGetTask,
+    handlePostTask,
+    handlePatchTask,
+    handleDeleteTask
+} = require("./tasks.controller");
 
 taskRouter.get('/tasks', handleGetTask)
 taskRouter.post('/tasks', handlePostTask)
