@@ -29,7 +29,7 @@ const taskSchema = new Schema({
         type    : Date,
         required: [true, 'Task due date is required'],
     },
-}, {timestamps: true});
+}, {timestamps: true, versionKey: false});
 
 const Task = model('Task', taskSchema);
 

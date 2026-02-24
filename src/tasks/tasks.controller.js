@@ -1,3 +1,6 @@
+const Task = require('./task.schema');
+const {StatusCodes} = require("http-status-codes");
+
 function handleGetTask(req, res) {
     let response = [
         {
@@ -20,8 +23,17 @@ function handleGetTask(req, res) {
     res.json(response);
 }
 
-function handlePostTask(req, res) {
-    res.send('POST Task Controller');
+async function handlePostTask(req, res) {
+    const task = new Task({
+        title      : req.body.title,
+        description: req.body.description,
+        status     : req.body.status,
+        priority   : req.body.priority,
+        dueDate    : req.body.dueDate
+    });
+
+    await task.save();
+    res.status(StatusCodes.CREATED).json(task);
 }
 
 function handlePatchTask(req, res) {
