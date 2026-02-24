@@ -6,7 +6,15 @@ async function createTaskProvider(req, res) {
     //if unwanted data is passed then we will validate and remove unwanted data.
     const validatedResult = matchedData(req);
     const task = new Task(validatedResult);
-    return await task.save();
+    try {
+        await task.save();
+        return res.status(StatusCodes.CREATED).json(task);
+    } catch (e) {
+        return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
+            reason: "Unable to process at the moment, please try" +
+                " again later."
+        });
+    }
 }
 
 module.exports = createTaskProvider;
