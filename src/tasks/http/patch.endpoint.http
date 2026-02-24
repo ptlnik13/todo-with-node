@@ -1,10 +1,11 @@
 PATCH http://localhost:3001/tasks
 Content-Type: application/json
 
-#{
-#"title": "Title of the Task.",
-#"date" : "2025-01-01T12:00:00Z",
-#"description": "lorem Ipsum I sthe tgreawr rf dsd fsf asdfa sf",
-#"priority" : "normal",
-#"status" : "todo"
-#}
+{
+  "_id": "699dc6e518694e6418e769c7",
+  "title": "Title of the Task.",
+  "dueDate": "2025-01-01T12:00:00Z",
+  "description": "lorem Ipsum I sthe tgreawr rf dsd fsf asdfa sf",
+  "priority": "high",
+  "status": "todo"
+}
