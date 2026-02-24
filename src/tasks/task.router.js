@@ -9,14 +9,10 @@ const {
     handleDeleteTask
 } = require("./tasks.controller");
 const {StatusCodes} = require("http-status-codes");
+const createTaskValidator = require("./validators/createTask.validator");
 
 taskRouter.get('/tasks', handleGetTask)
-taskRouter.post('/tasks', [
-        body('title', 'The Title can not be empty!').notEmpty(),
-        body('title', 'Title must be a string!').isString(),
-        body('dueDate', 'dueDate needs to be valid ISO8601 string').notEmpty().isISO8601(),
-    ],
-    (req, res) => {
+taskRouter.post('/tasks', createTaskValidator, (req, res) => {
         const result = validationResult(req);
         if (result.isEmpty()) {
             return handlePostTask(req, res)
