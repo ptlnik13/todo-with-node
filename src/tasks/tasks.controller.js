@@ -5,8 +5,7 @@ const updateTaskProvider = require("./providers/updateTask.provider");
 const deleteTaskProvider = require("./providers/deleteTask.provider");
 
 async function handleGetTask(req, res) {
-    let tasks = await getTasksProvider(req, res);
-    res.status(StatusCodes.OK).json(tasks);
+    return  await getTasksProvider(req, res);
 }
 
 async function handlePostTask(req, res) {
