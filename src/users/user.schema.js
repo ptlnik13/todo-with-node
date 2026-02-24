@@ -37,7 +37,7 @@ const userSchema = new Schema({
             message  : props => `${props.value} is not a valid password!`
         }
     }
-})
+}, {timestamps: true, versionKey: false})
 
 const User = model('User', userSchema);
 
