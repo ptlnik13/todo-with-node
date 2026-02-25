@@ -1,16 +1,8 @@
 require('dotenv').config();
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const morgan = require('morgan');
-const taskRouter = require('./tasks/task.router.js');
 const {StatusCodes} = require('http-status-codes');
-const cors = require('cors');
-const responseFormatter = require('./middlewares/responseFormatter.js');
-const authRouter = require("./auth/auth.router");
-const userRouter = require("./users/users.router");
 const mongoose = require('mongoose');
-const expressWinstonLogger = require('./middlewares/expressWinston.middleware');
+const configureApp = require('./settings/config');
 
 
 const app = express();
@@ -23,20 +15,10 @@ app.use(express.json());
 //
 // app.use(cors(corsOptions));
 
-app.use(cors()); // wild card
-app.use(responseFormatter);
-app.use(expressWinstonLogger);
-
-const port = 3001;
-
-let accessLogStream = fs.createWriteStream(path.join(__dirname, '../access.log'), {flags: 'a'})
-app.use(morgan('combined', {stream: accessLogStream}))
-
-app.use('/', taskRouter);
-app.use('/auth', authRouter);
-app.use('/users', userRouter);
+configureApp(app)
 app.use((req, res) => res.status(StatusCodes.NOT_FOUND).json(null))
 
+const port = 3001;
 
 async function bootstrap() {
     try {
