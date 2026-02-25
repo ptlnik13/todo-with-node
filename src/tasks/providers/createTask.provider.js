@@ -1,16 +1,23 @@
 const {StatusCodes} = require("http-status-codes");
 const Task = require("../task.schema");
+const {matchedData} = require('express-validator')
+const logger = require("../../helpers/winston.helper");
+const errorLogger = require("../../helpers/errorLogger.helper");
 
 async function createTaskProvider(req, res) {
-    const task = new Task({
-        title      : req.body.title,
-        description: req.body.description,
-        status     : req.body.status,
-        priority   : req.body.priority,
-        dueDate    : req.body.dueDate
-    });
-
-    return await task.save();
+    //if unwanted data is passed then we will validate and remove unwanted data.
+    const validatedResult = matchedData(req);
+    const task = new Task(validatedResult);
+    try {
+        await task.save();
+        return res.status(StatusCodes.CREATED).json(task);
+    } catch (e) {
+        errorLogger(`Error while creating task: ${e.message}`, req, e)
+        return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
+            reason: "Unable to process at the moment, please try" +
+                " again later."
+        });
+    }
 }
 
 module.exports = createTaskProvider;

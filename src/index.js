@@ -10,6 +10,8 @@ const responseFormatter = require('./middlewares/responseFormatter.js');
 const authRouter = require("./auth/auth.router");
 const userRouter = require("./users/users.router");
 const mongoose = require('mongoose');
+const expressWinstonLogger = require('./middlewares/expressWinston.middleware');
+
 
 const app = express();
 
@@ -22,7 +24,8 @@ app.use(express.json());
 // app.use(cors(corsOptions));
 
 app.use(cors()); // wild card
-app.use(responseFormatter)
+app.use(responseFormatter);
+app.use(expressWinstonLogger);
 
 const port = 3001;
 
