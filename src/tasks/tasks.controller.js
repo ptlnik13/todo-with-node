@@ -17,8 +17,7 @@ async function handlePatchTask(req, res) {
 }
 
 async function handleDeleteTask(req, res) {
-    const deletedTask = await deleteTaskProvider(req, res);
-    res.status(StatusCodes.OK).json(deletedTask);
+   return  deleteTaskProvider(req, res);
 }
 
 module.exports = {handleGetTask, handlePostTask, handlePatchTask, handleDeleteTask};

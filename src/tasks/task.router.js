@@ -6,6 +6,7 @@ const {StatusCodes} = require("http-status-codes");
 const createTaskValidator = require("./validators/createTask.validator");
 const getTasksValidator = require("./validators/getTasks.validator");
 const updateTaskValidator = require("./validators/updateTask.validator");
+const deleteTaskValidator = require("./validators/deleteTask.validator");
 
 taskRouter.get('/tasks', getTasksValidator, (req, res) => {
     const result = validationResult(req);
@@ -31,7 +32,14 @@ taskRouter.patch('/tasks', updateTaskValidator, (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json(result.array())
     }
 })
-taskRouter.delete('/tasks', handleDeleteTask)
+taskRouter.delete('/tasks', deleteTaskValidator, (req, res) => {
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+        return handleDeleteTask(req, res)
+    } else {
+        return res.status(StatusCodes.BAD_REQUEST).json(result.array())
+    }
+})
 
 
 module.exports = taskRouter;
