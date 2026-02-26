@@ -16,7 +16,10 @@ async function getTasksProvider(req, res) {
         const prevPage = currentPage === 1 ? currentPage : currentPage - 1;
         const baseUrl = `${req.protocol}://${req.get('host')}${req.originalUrl.split('?')[0]}`;
 
-        const tasks = await Task.find().limit(limit).skip((currentPage - 1) * limit).sort({createdAt: order === 'asc' ? 1 : -1});
+        const tasks = await Task.find({status: {$in: ['todo', 'inProgress']}})
+            .limit(limit)
+            .skip((currentPage - 1) * limit)
+            .sort({createdAt: order === 'asc' ? 1 : -1});
 
         let finalResponse = {
             data      : tasks,
