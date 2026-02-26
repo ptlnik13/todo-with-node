@@ -7,7 +7,7 @@ const errorLogger = require("../../helpers/errorLogger.helper");
 async function createTaskProvider(req, res) {
     //if unwanted data is passed then we will validate and remove unwanted data.
     const validatedResult = matchedData(req);
-    const task = new Task(validatedResult);
+    const task = new Task({...validatedResult, user: req.user.sub});
     try {
         await task.save();
         return res.status(StatusCodes.CREATED).json(task);

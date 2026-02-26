@@ -29,13 +29,6 @@ const userSchema = new Schema({
     password : {
         type     : String,
         required : [true, 'Password is required'],
-        minlength: [8, 'Password must be at least 8 characters long'],
-        validate : {
-            validator: function (password) {
-                return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)
-            },
-            message  : props => `${props.value} is not a valid password!`
-        }
     }
 }, {timestamps: true, versionKey: false})
 

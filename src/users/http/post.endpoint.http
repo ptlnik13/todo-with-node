@@ -1,9 +1,0 @@
-POST http://localhost:3001/users/create
-Content-Type: application/json
-
-{
-  "firstName": "Prisha",
-  "lastName": "Patel",
-  "email": "prisha@patel.com",
-  "password": "Nikesh@123"
-}

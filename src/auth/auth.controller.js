@@ -1,6 +1,7 @@
-function handleLogin(req, res) {
-    // res.send('Login')
-    res.json({token: 'Hello', user: 'Nikesh'});
+const authProvider = require('./providers/auth.provider');
+
+async function handleLogin(req, res) {
+    return await authProvider(req, res);
 }
 
 
