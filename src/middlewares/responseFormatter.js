@@ -7,9 +7,10 @@ function responseFormatter(req, res, next) {
             status    : res.statusCode >= 200 && res.statusCode < 300 ? 'success' : 'error',
             statusCode: res.statusCode,
             message   : getReasonPhrase(res.statusCode),
-            data      : res.statusCode >= 200 && res.statusCode < 300 ? data : null,
-            error     : res.statusCode >= 200 && res.statusCode < 300 ? null : data
         }
+        if (res.statusCode >= 200 && res.statusCode < 300) response.data = data.pagination ? data.data : data;
+        if (data.pagination) response.pagination = data.pagination;
+        if (res.statusCode > 300) response.error = data;
         originalJson.call(res, response);
     };
     next();
