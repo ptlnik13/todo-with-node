@@ -3,6 +3,7 @@ const errorLogger = require("../../helpers/errorLogger.helper");
 const {StatusCodes} = require("http-status-codes");
 const User = require("../../users/user.schema");
 const {compare} = require("bcrypt");
+const generateTokenProvider = require("./generateToken.provider");
 
 async function authProvider(req, res) {
     const validateData = matchedData(req);
@@ -16,7 +17,11 @@ async function authProvider(req, res) {
             return res.status(StatusCodes.BAD_REQUEST).json({reason: 'Invalid credentials'});
         }
 
-        return res.status(StatusCodes.OK).json({login: true});
+        const token = generateTokenProvider(user);
+
+        return res.status(StatusCodes.OK).json({
+            accessToken: token, firstName: user.firstName, lastName: user.lastName, email: user.email
+        });
     } catch (error) {
         errorLogger("Error while login:", req, error);
         return res.status(StatusCodes.BAD_REQUEST).json({reason: 'Failed to login'});
