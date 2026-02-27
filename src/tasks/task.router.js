@@ -17,6 +17,67 @@ taskRouter.get('/tasks', [getTasksValidator, authenticateToken], (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json(result.array())
     }
 })
+
+/**
+ * @swagger
+ *
+ * components:
+ *  securitySchemes:
+ *      bearerAuth:
+ *          type: http
+ *          scheme: bearer
+ *          bearerFormat: JWT
+ * /tasks:
+ *  post:
+ *      summary: Create a new task
+ *      tags: [Tasks]
+ *      security:
+ *      - bearerAuth: []
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Task'
+ *      responses:
+ *          '201':
+ *              description: Task created successfully
+ *              content:
+ *                  application/json:
+ *                      example:
+ *                          statusCode: 201
+ *                          status: success
+ *                          message: Task created successfully
+ *                          data:
+ *                              _id: 64b5c0f0e4b9b9b9b9b9b9b9
+ *                              title: Create a new Video
+ *                              description: Create a new Video for the user
+ *                              status: todo
+ *                              priority: normal
+ *                              dueDate: 2023-07-01T00:00:00.000Z
+ *
+ *          '401':
+ *              description: Unauthorized
+ *              content:
+ *                  application/json:
+ *                      example:
+ *                          statusCode: 401
+ *                          status: error
+ *                          message: Unauthorized
+ *                          error:
+ *                              message: Access denied
+ *
+ *          '403':
+ *              description: Forbidden
+ *              content:
+ *                  application/json:
+ *                      example:
+ *                          statusCode: 403
+ *                          status: error
+ *                          message: Forbidden
+ *                          error:
+ *                              message: Invalid token, Please login again
+ */
 taskRouter.post('/tasks', [createTaskValidator, authenticateToken], (req, res) => {
     const result = validationResult(req);
     if (result.isEmpty()) {
