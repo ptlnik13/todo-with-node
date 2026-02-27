@@ -30,8 +30,8 @@ const taskSchema = new Schema({
         required: [true, 'Task due date is required'],
     },
     user       : {
-        type: Schema.Types.ObjectId,
-        ref : 'User',
+        type    : Schema.Types.ObjectId,
+        ref     : 'User',
         required: true
     }
 }, {timestamps: true, versionKey: false});
@@ -39,3 +39,45 @@ const taskSchema = new Schema({
 const Task = model('Task', taskSchema);
 
 module.exports = Task;
+
+/**
+ * @swagger
+ *
+ * components:
+ *   schemas:
+ *     Task:
+ *       type: object
+ *       required:
+ *         - title
+ *         - description
+ *         - status
+ *         - priority
+ *         - dueDate
+ *       properties:
+ *          title:
+ *            type: string
+ *            description: The Title of the Task
+ *            maxLength: 100
+ *          description:
+ *            type: string
+ *            description: The Description of the Task
+ *            maxLength: 500
+ *          status:
+ *            type: string
+ *            description: The Status of the Task
+ *            enum: ["todo", "inProgress", "completed"]
+ *          priority:
+ *            type: string
+ *            description: The Priority of the Task
+ *            enum: ['low', 'normal', 'high']
+ *          dueDate:
+ *            type: string
+ *            format: ISO8601 Date String
+ *            description: The Due Date of the Task
+ *       example:
+ *          title: Create a new Video
+ *          description: Create a new Video for the user
+ *          status: todo
+ *          priority: normal
+ *          dueDate: 2023-07-01T00:00:00Z
+ */
