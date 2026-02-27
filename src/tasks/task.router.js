@@ -9,6 +9,64 @@ const updateTaskValidator = require("./validators/updateTask.validator");
 const deleteTaskValidator = require("./validators/deleteTask.validator");
 const authenticateToken = require("../middlewares/authenticateToken.middleware");
 
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * /tasks:
+ *   get:
+ *     summary: Get all tasks
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: The number of tasks needed in a single response.
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: The page number of the tasks response.
+ *       - in: query
+ *         name: order
+ *         schema:
+ *           type: string
+ *           default: 'asc'
+ *           enum: [asc, desc]
+ *         description: Order of tasks ('asc' or 'desc').
+ *     responses:
+ *       200:
+ *         description: A list of tasks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
+ *       401:
+ *         description: Not Authorized error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "You are not Authorized to perform this request"
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "Your token is either expired or invalid."
+ */
 taskRouter.get('/tasks', [getTasksValidator, authenticateToken], (req, res) => {
     const result = validationResult(req);
     if (result.isEmpty()) {
