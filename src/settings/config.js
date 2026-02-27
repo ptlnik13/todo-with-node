@@ -7,7 +7,8 @@ const authRouter = require("../auth/auth.router");
 const userRouter = require("../users/users.router");
 const responseFormatter = require("../middlewares/responseFormatter");
 const expressWinstonLogger = require("../middlewares/expressWinston.middleware");
-
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger.config");
 
 function configureApp(app) {
     app.use(cors()); // wild card
@@ -21,6 +22,7 @@ function configureApp(app) {
     app.use('/', taskRouter);
     app.use('/auth', authRouter);
     app.use('/users', userRouter);
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
 module.exports = configureApp;
