@@ -195,6 +195,49 @@ taskRouter.patch('/tasks', [updateTaskValidator, authenticateToken], (req, res) 
         return res.status(StatusCodes.BAD_REQUEST).json(result.array())
     }
 })
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * /tasks:
+ *   delete:
+ *     summary: Delete a task
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TaskDelete'
+ *     responses:
+ *       200:
+ *         description: Shape of task response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TaskDelete'
+ *       401:
+ *         description: Not Authorized error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "You are not Authorized to perform this request"
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "Your token is either expired or invalid."
+ */
 taskRouter.delete('/tasks', [deleteTaskValidator, authenticateToken], (req, res) => {
     const result = validationResult(req);
     if (result.isEmpty()) {
